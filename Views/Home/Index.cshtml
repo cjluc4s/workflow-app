@@ -1,0 +1,57 @@
+﻿@model WorkflowApp.Models.DashboardViewModel
+
+@{
+    ViewData["Title"] = "Dashboard";
+}
+
+<h2>Dashboard</h2>
+
+@if (User.Identity!.IsAuthenticated)
+{
+    <div class="row mt-4">
+
+        <div class="col-md-3">
+            <div class="card text-white bg-primary mb-3">
+                <div class="card-body">
+                    <h5 class="card-title">Total Geral</h5>
+                    <h3>@Model.TotalGeral</h3>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-3">
+            <div class="card text-dark bg-warning mb-3">
+                <div class="card-body">
+                    <h5 class="card-title">Pendentes</h5>
+                    <h3>@Model.TotalPendentes</h3>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-3">
+            <div class="card text-white bg-success mb-3">
+                <div class="card-body">
+                    <h5 class="card-title">Aprovadas</h5>
+                    <h3>@Model.TotalAprovadas</h3>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-3">
+            <div class="card text-white bg-danger mb-3">
+                <div class="card-body">
+                    <h5 class="card-title">Rejeitadas</h5>
+                    <h3>@Model.TotalRejeitadas</h3>
+                </div>
+            </div>
+        </div>
+
+    </div>
+}
+else
+{
+    <div class="text-center mt-5">
+        <h4>Bem-vindo ao WorkflowApp</h4>
+        <p>Faça login para visualizar suas solicitações.</p>
+    </div>
+}
