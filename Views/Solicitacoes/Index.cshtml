@@ -1,4 +1,5 @@
 ﻿@model IEnumerable<WorkflowApp.Models.Solicitacao>
+@using WorkflowApp.Models
 
 @{
     ViewData["Title"] = "Minhas Solicitações";
@@ -39,41 +40,37 @@ else
                     <td>@item.Titulo</td>
 
                     <td>
-                        @if (item.Status == "Pendente")
+                        @if (item.Status == StatusSolicitacao.Pendente)
                         {
                             <span class="badge bg-warning text-dark">
-                                @item.Status
+                                Pendente
                             </span>
                         }
-                        else if (item.Status == "Aprovado")
+                        else if (item.Status == StatusSolicitacao.Aprovado)
                         {
                             <span class="badge bg-success">
-                                @item.Status
+                                Aprovado
                             </span>
                         }
-                        else if (item.Status == "Rejeitado")
+                        else if (item.Status == StatusSolicitacao.Rejeitado)
                         {
                             <span class="badge bg-danger">
-                                @item.Status
+                                Rejeitado
                             </span>
-                        }
-                        else
-                        {
-                            @item.Status
                         }
                     </td>
 
                     <td>@item.DataCriacao.ToString("dd/MM/yyyy HH:mm")</td>
 
                     <td>
-                        <!-- Botão Detalhes -->
                         <a asp-action="Detalhes"
                            asp-route-id="@item.Id"
                            class="btn btn-info btn-sm">
                             Detalhes
                         </a>
 
-                        @if (User.IsInRole("Aprovador") && item.Status == "Pendente")
+                        @if (User.IsInRole("Aprovador") &&
+                                        item.Status == StatusSolicitacao.Pendente)
                         {
                             <a asp-action="Aprovar"
                                asp-route-id="@item.Id"

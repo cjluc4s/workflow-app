@@ -17,7 +17,7 @@ namespace WorkflowApp.Models
 
         public DateTime DataCriacao { get; set; } = DateTime.Now;
 
-        public string Status { get; set; } = "Pendente";
+        public StatusSolicitacao Status { get; set; } = StatusSolicitacao.Pendente;
 
         public string UsuarioId { get; set; } = default!;
 

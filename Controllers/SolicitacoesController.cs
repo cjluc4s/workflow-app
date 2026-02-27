@@ -43,7 +43,7 @@ namespace WorkflowApp.Controllers
         {
             var pendentes = await _context.Solicitacoes
                 .Include(s => s.Usuario)
-                .Where(s => s.Status == "Pendente")
+                .Where(s => s.Status == StatusSolicitacao.Pendente)
                 .ToListAsync();
 
             return View(pendentes);
@@ -72,7 +72,7 @@ namespace WorkflowApp.Controllers
 
             solicitacao.UsuarioId = _userManager.GetUserId(User)!;
             solicitacao.DataCriacao = DateTime.Now;
-            solicitacao.Status = "Pendente";
+            solicitacao.Status = StatusSolicitacao.Pendente;
 
             _context.Add(solicitacao);
             await _context.SaveChangesAsync();
@@ -93,13 +93,13 @@ namespace WorkflowApp.Controllers
 
             var statusAnterior = solicitacao.Status;
 
-            solicitacao.Status = "Aprovado";
+            solicitacao.Status = StatusSolicitacao.Aprovado;
 
             var historico = new HistoricoStatus
             {
                 SolicitacaoId = solicitacao.Id,
-                StatusAnterior = statusAnterior,
-                StatusNovo = "Aprovado",
+                StatusAnterior = statusAnterior.ToString(),
+                StatusNovo = StatusSolicitacao.Aprovado.ToString(),
                 UsuarioId = _userManager.GetUserId(User)!,
                 DataAlteracao = DateTime.Now
             };
@@ -124,13 +124,13 @@ namespace WorkflowApp.Controllers
 
             var statusAnterior = solicitacao.Status;
 
-            solicitacao.Status = "Rejeitado";
+            solicitacao.Status = StatusSolicitacao.Rejeitado;
 
             var historico = new HistoricoStatus
             {
                 SolicitacaoId = solicitacao.Id,
-                StatusAnterior = statusAnterior,
-                StatusNovo = "Rejeitado",
+                StatusAnterior = statusAnterior.ToString(),
+                StatusNovo = StatusSolicitacao.Rejeitado.ToString(),
                 UsuarioId = _userManager.GetUserId(User)!,
                 DataAlteracao = DateTime.Now
             };

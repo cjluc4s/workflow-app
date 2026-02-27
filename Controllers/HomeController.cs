@@ -27,14 +27,15 @@ public class HomeController : Controller
             if (User.IsInRole("Aprovador"))
             {
                 model.TotalGeral = await _context.Solicitacoes.CountAsync();
+
                 model.TotalPendentes = await _context.Solicitacoes
-                    .CountAsync(s => s.Status == "Pendente");
+                    .CountAsync(s => s.Status == StatusSolicitacao.Pendente);
 
                 model.TotalAprovadas = await _context.Solicitacoes
-                    .CountAsync(s => s.Status == "Aprovado");
+                    .CountAsync(s => s.Status == StatusSolicitacao.Aprovado);
 
                 model.TotalRejeitadas = await _context.Solicitacoes
-                    .CountAsync(s => s.Status == "Rejeitado");
+                    .CountAsync(s => s.Status == StatusSolicitacao.Rejeitado);
             }
             else
             {
@@ -44,13 +45,16 @@ public class HomeController : Controller
                     .CountAsync(s => s.UsuarioId == userId);
 
                 model.TotalPendentes = await _context.Solicitacoes
-                    .CountAsync(s => s.UsuarioId == userId && s.Status == "Pendente");
+                    .CountAsync(s => s.UsuarioId == userId &&
+                                     s.Status == StatusSolicitacao.Pendente);
 
                 model.TotalAprovadas = await _context.Solicitacoes
-                    .CountAsync(s => s.UsuarioId == userId && s.Status == "Aprovado");
+                    .CountAsync(s => s.UsuarioId == userId &&
+                                     s.Status == StatusSolicitacao.Aprovado);
 
                 model.TotalRejeitadas = await _context.Solicitacoes
-                    .CountAsync(s => s.UsuarioId == userId && s.Status == "Rejeitado");
+                    .CountAsync(s => s.UsuarioId == userId &&
+                                     s.Status == StatusSolicitacao.Rejeitado);
             }
         }
 
