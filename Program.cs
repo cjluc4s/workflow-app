@@ -1,7 +1,10 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using WorkflowApp.Data;
+<<<<<<< HEAD
 using WorkflowApp.Services;
+=======
+>>>>>>> b220a2d021d35a365b1fe6f676934fbf0179406d
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -29,11 +32,14 @@ builder.Services.AddAuthorization();
 builder.Services.AddControllersWithViews();
 builder.Services.AddRazorPages();
 
+<<<<<<< HEAD
 // =======================
 // Registrar Services
 // =======================
 builder.Services.AddScoped<ISolicitacaoService, SolicitacaoService>();
 
+=======
+>>>>>>> b220a2d021d35a365b1fe6f676934fbf0179406d
 var app = builder.Build();
 
 // =======================
