@@ -1,0 +1,100 @@
+﻿@model IEnumerable<WorkflowApp.Models.Solicitacao>
+@using WorkflowApp.Models
+
+@{
+    ViewData["Title"] = "Minhas Solicitações";
+}
+
+<h2>Minhas Solicitações</h2>
+
+@if (User.IsInRole("Aprovador"))
+{
+    <p class="text-success fw-bold">Você é Aprovador</p>
+}
+else
+{
+    <p class="text-muted">Perfil: Solicitante</p>
+}
+
+<p>
+    <a asp-action="Create" class="btn btn-primary">
+        Nova Solicitação
+    </a>
+</p>
+
+<table class="table table-striped table-hover">
+    <thead class="table-light">
+        <tr>
+            <th>Título</th>
+            <th>Status</th>
+            <th>Data</th>
+            <th style="width:250px;">Ações</th>
+        </tr>
+    </thead>
+    <tbody>
+        @if (Model != null && Model.Any())
+        {
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>@item.Titulo</td>
+
+                    <td>
+                        @if (item.Status == StatusSolicitacao.Pendente)
+                        {
+                            <span class="badge bg-warning text-dark">
+                                Pendente
+                            </span>
+                        }
+                        else if (item.Status == StatusSolicitacao.Aprovado)
+                        {
+                            <span class="badge bg-success">
+                                Aprovado
+                            </span>
+                        }
+                        else if (item.Status == StatusSolicitacao.Rejeitado)
+                        {
+                            <span class="badge bg-danger">
+                                Rejeitado
+                            </span>
+                        }
+                    </td>
+
+                    <td>@item.DataCriacao.ToString("dd/MM/yyyy HH:mm")</td>
+
+                    <td>
+                        <a asp-action="Detalhes"
+                           asp-route-id="@item.Id"
+                           class="btn btn-info btn-sm">
+                            Detalhes
+                        </a>
+
+                        @if (User.IsInRole("Aprovador") &&
+                                        item.Status == StatusSolicitacao.Pendente)
+                        {
+                            <a asp-action="Aprovar"
+                               asp-route-id="@item.Id"
+                               class="btn btn-success btn-sm">
+                                Aprovar
+                            </a>
+
+                            <a asp-action="Rejeitar"
+                               asp-route-id="@item.Id"
+                               class="btn btn-danger btn-sm">
+                                Rejeitar
+                            </a>
+                        }
+                    </td>
+                </tr>
+            }
+        }
+        else
+        {
+            <tr>
+                <td colspan="4" class="text-center text-muted">
+                    Nenhuma solicitação encontrada.
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

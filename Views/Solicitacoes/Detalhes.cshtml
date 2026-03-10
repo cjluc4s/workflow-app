@@ -1,0 +1,51 @@
+﻿@model WorkflowApp.Models.Solicitacao
+
+@{
+    ViewData["Title"] = "Detalhes da Solicitação";
+    var historico = ViewBag.Historico as List<WorkflowApp.Models.HistoricoStatus>;
+}
+
+<h2>Detalhes da Solicitação</h2>
+
+<div class="card mb-4">
+    <div class="card-body">
+        <h4>@Model.Titulo</h4>
+        <p><strong>Status:</strong> @Model.Status</p>
+        <p><strong>Descrição:</strong> @Model.Descricao</p>
+        <p><strong>Data Criação:</strong> @Model.DataCriacao.ToString("dd/MM/yyyy HH:mm")</p>
+        <p><strong>Criado por:</strong> @Model.Usuario?.Email</p>
+    </div>
+</div>
+
+<h4>Histórico de Alterações</h4>
+
+@if (historico != null && historico.Any())
+{
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>Data</th>
+                <th>Status Anterior</th>
+                <th>Status Novo</th>
+                <th>Alterado por</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in historico)
+            {
+                <tr>
+                    <td>@item.DataAlteracao.ToString("dd/MM/yyyy HH:mm")</td>
+                    <td>@item.StatusAnterior</td>
+                    <td>@item.StatusNovo</td>
+                    <td>@item.UsuarioId</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+else
+{
+    <p>Nenhuma alteração registrada.</p>
+}
+
+<a asp-action="Index" class="btn btn-secondary">Voltar</a>
